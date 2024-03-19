@@ -9,6 +9,6 @@ class DashboardController extends Controller
     public function index()
     {
         // addVendors(['amcharts', 'amcharts-maps', 'amcharts-stock']);
-        return view('master');
+        return view('dashboard');
     }
 }
