@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dokter;
 use Illuminate\Http\Request;
 
 class DokterController extends Controller
@@ -11,6 +12,8 @@ class DokterController extends Controller
      */
     public function index()
     {
+        // $dokter = Dokter::all();
+        // dd($dokter);
         return view('apps.dokter.list');
     }
 

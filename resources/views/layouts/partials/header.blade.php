@@ -1,27 +1,15 @@
-@extends('master')
 
-@section('header-breadcumbs')
-    <!--begin::Header-->
-    <div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
+<div id="kt_header" class="header py-6 py-lg-0" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{lg: '300px'}">
     <!--begin::Container-->
     <div class="header-container container-xxl">
         <!--begin::Page title-->
         <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
             <!--begin::Heading-->
             <h1 class="d-flex flex-column text-gray-900 fw-bold my-1">
-                <span class="text-white fs-1">Customer List</span>
+                <span class="text-white fs-1">Dashboard</span>
+                <small class="text-gray-600 fs-6 fw-normal pt-2">Create a store with #YDR-124-346 code</small>
             </h1>
             <!--end::Heading-->
-            <!--begin::Breadcrumb-->
-            <ul class="breadcrumb breadcrumb-line fw-semibold fs-7 my-1">
-                <li class="breadcrumb-item text-gray-600">
-                    <a href="index.html" class="text-gray-600 text-hover-primary">Home</a>
-                </li>
-                <li class="breadcrumb-item text-gray-600">Apps</li>
-                <li class="breadcrumb-item text-gray-600">Customers</li>
-                <li class="breadcrumb-item text-gray-500">Customer Listing</li>
-            </ul>
-            <!--end::Breadcrumb-->
         </div>
         <!--end::Page title=-->
         <!--begin::Wrapper-->
@@ -735,6 +723,9 @@
                             <!--end::Tabs-->
                         </div>
                         <!--end::Heading-->
+
+
+
                         <!--begin::Tab content-->
                         <div class="tab-content">
                             <!--begin::Tab panel-->
@@ -1383,7 +1374,9 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="authentication/layouts/corporate/sign-in.html" class="menu-link px-5">Sign Out</a>
+                            <a class="button-ajax menu-link px-5" href="#" data-action="{{ route('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}" data-reload="true">
+                                Sign Out
+                            </a>
                         </div>
                         <!--end::Menu item-->
                     </div>
@@ -1468,7 +1461,11 @@
                 </div>
                 <!--end::Theme mode-->
                 <!--begin::Item-->
-                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">New Goal</a>
+                @session('status')
+                    <div class="p-4 bg-green-100">
+                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">New Goal {{ $value }}</a>
+                    </div>
+                @endsession
                 <!--end::Item-->
             </div>
             <!--end::Action-->
@@ -1478,5 +1475,3 @@
     <!--end::Container-->
     <div class="header-offset"></div>
 </div>
-<!--end::Header-->
-@endsection
