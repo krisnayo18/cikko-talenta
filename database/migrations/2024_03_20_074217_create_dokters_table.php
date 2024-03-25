@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('dokters', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 50);
-            $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L','P']);
             $table->string('nomor_hp', 50);
             $table->text('alamat');
+            $table->string('spesialis', 50);
+            $table->date('tanggal_lahir');
+            $table->date('tanggal_gabung');
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });

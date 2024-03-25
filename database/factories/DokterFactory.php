@@ -22,7 +22,9 @@ class DokterFactory extends Factory
         return [
             'nama' => $this->faker->name(),
             'tanggal_lahir' => $now,
+            'tanggal_gabung' => $now,
             'jenis_kelamin' => $this->faker->randomElement(['L','P']),
+            'spesialis' => $this->faker->randomElement(['penyakit dalam','penyakit anak','saraf','kandungan','bedah']),
             'nomor_hp' => $this->faker->phoneNumber(),
             'alamat' => $this->faker->address(),
         ];
