@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama', 50);
             $table->enum('jenis_kelamin', ['L','P']);
-            $table->text('alamat');
             $table->string('nomor_hp', 50);
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->text('alamat');
             $table->string('bagian', 50)->nullable();
             $table->date('tanggal_lahir');
             $table->date('tanggal_gabung');

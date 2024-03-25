@@ -21,6 +21,8 @@ class DokterFactory extends Factory
 
         return [
             'nama' => $this->faker->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
             'tanggal_lahir' => $now,
             'tanggal_gabung' => $now,
             'jenis_kelamin' => $this->faker->randomElement(['L','P']),

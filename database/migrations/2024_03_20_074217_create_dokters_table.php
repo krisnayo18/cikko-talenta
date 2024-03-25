@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama', 50);
             $table->enum('jenis_kelamin', ['L','P']);
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('nomor_hp', 50);
             $table->text('alamat');
             $table->string('spesialis', 50);
