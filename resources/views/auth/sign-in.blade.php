@@ -1,17 +1,5 @@
 
 <!DOCTYPE html>
-<!--
-Author: Keenthemes
-Product Name: Metronic 
-Product Version: 8.2.3
-Purchase: https://1.envato.market/EA4JP
-Website: http://www.keenthemes.com
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
--->
 <html lang="en">
 	<!--begin::Head-->
 	<head>
@@ -55,27 +43,28 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Wrapper-->
 						<div class="w-lg-500px p-10">
 							<!--begin::Form-->
-							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="index.html" action="#">
+							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{{route('dashboard') }}" action="{{ route('login') }}">
+								@csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-11">
 									<!--begin::Title-->
 									<h1 class="text-gray-900 fw-bolder mb-3">Sign In</h1>
 									<!--end::Title-->
 									<!--begin::Subtitle-->
-									<div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
+									<div class="text-gray-500 fw-semibold fs-6">KOPKAR TJIWI KIMIA</div>
 									<!--end::Subtitle=-->
 								</div>
 								<!--begin::Heading-->
 								<!--begin::Input group=-->
 								<div class="fv-row mb-8">
 									<!--begin::Email-->
-									<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+									<input type="text" placeholder="Email" name="email" autocomplete="off" value="jackeline.ward@example.org" class="form-control bg-transparent" />
 									<!--end::Email-->
 								</div>
 								<!--end::Input group=-->
 								<div class="fv-row mb-8">
 									<!--begin::Password-->
-									<input type="password" placeholder="Password" name="password" autocomplete="off" class="form-control bg-transparent" />
+									<input type="password" placeholder="Password" name="password" autocomplete="off" value="password" class="form-control bg-transparent" />
 									<!--end::Password-->
 								</div>
 								<!--end::Input group=-->

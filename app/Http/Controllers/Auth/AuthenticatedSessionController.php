@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
         STILL WATCH BITCOIN in range between 65 and 61. IF DUMP to 59 is invalid 
         AI is done, if there a change to retest very dip. it will announence again
         */
-        return view('auth.login');
+        return view('auth.sign-in');
     }
 
     /**

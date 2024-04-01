@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Perawat extends Model
 {
     use HasFactory;
+    // protected $fillable = [
+    //     'title', 'description'
+    // ];    public $timestamps = true;
 }

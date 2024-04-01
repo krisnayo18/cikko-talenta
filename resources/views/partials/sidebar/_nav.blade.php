@@ -61,9 +61,33 @@
                     <div class="menu-item">
                         <!--begin:Menu content-->
                         <div class="menu-content">
-                            <span class="menu-section fs-5 fw-bolder ps-1 py-1">Pages</span>
+                            <span class="menu-section fs-5 fw-bolder ps-1 py-1">Apps</span>
                         </div>
                         <!--end:Menu content-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{route('dokters.index')}}" title="Lihat Daftar Dokter Yang Tersimpan" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Dokter Manajemen</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{route('perawats.index')}}" title="Lihat Daftar Perawat Yang Tersimpan" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Perawat Manajemen</span>
+                        </a>
+                        <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
@@ -190,7 +214,7 @@
                     <div class="menu-item">
                         <!--begin:Menu content-->
                         <div class="menu-content">
-                            <span class="menu-section fs-5 fw-bolder ps-1 py-1">Apps</span>
+                            <span class="menu-section fs-5 fw-bolder ps-1 py-1">Laporan</span>
                         </div>
                         <!--end:Menu content-->
                     </div>

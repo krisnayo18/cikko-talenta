@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DokterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DokterController;
+use App\Http\Controllers\PerawatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
@@ -30,9 +32,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('dokters', DokterController::class);
-
+    Route::resource('perawats', PerawatController::class);
 
     
+    // Route::get('/perawat', App\Livewire\Perawat::class)->name('perawat.index');
+    // Route::get('/perawat/{id}', App\Livewire\Perawat::class)->name('perawat.show');
+    // Route::view('/dashboard', 'livewire.dashboard.index')->name('dashboard');
+    // Route::view('/', 'dashboard.index');
 });
 
 Route::get('/error', function () {
