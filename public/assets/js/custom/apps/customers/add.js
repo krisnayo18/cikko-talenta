@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalCustomersAdd = function () {
+var KTModalDoctorsAdd = function () {
     var submitButton;
     var cancelButton;
 	var closeButton;
@@ -16,69 +16,62 @@ var KTModalCustomersAdd = function () {
 			form,
 			{
 				fields: {
-                    'name': {
+                    'nama': {
 						validators: {
 							notEmpty: {
-								message: 'Customer name is required'
+								message: 'Nama dokter dibutuhkan'
+							}
+						}
+					},
+                    'jenis-kelamin': {
+						validators: {
+							notEmpty: {
+								message: 'Gender is required'
 							}
 						}
 					},
                     'email': {
 						validators: {
 							notEmpty: {
-								message: 'Customer email is required'
+								message: 'Doctor email is required'
 							}
 						}
 					},
-					'first-name': {
+					'nomor-hp': {
 						validators: {
 							notEmpty: {
-								message: 'First name is required'
+								message: 'Phone Number is required'
 							}
 						}
 					},
-					'last-name': {
+					'tanggal-lahir': {
 						validators: {
 							notEmpty: {
-								message: 'Last name is required'
+								message: 'Phone Number is required'
 							}
 						}
 					},
-					'country': {
+					'tanggal-gabung': {
 						validators: {
 							notEmpty: {
-								message: 'Country is required'
+								message: 'Phone Number is required'
 							}
 						}
 					},
-					'address1': {
+					'spesialis': {
 						validators: {
 							notEmpty: {
-								message: 'Address 1 is required'
+								message: 'Silahkan isi Spesialis'
 							}
 						}
 					},
-					'city': {
+					'alamat': {
 						validators: {
 							notEmpty: {
-								message: 'City is required'
+								message: 'Address is required'
 							}
 						}
 					},
-					'state': {
-						validators: {
-							notEmpty: {
-								message: 'State is required'
-							}
-						}
-					},
-					'postcode': {
-						validators: {
-							notEmpty: {
-								message: 'Postcode is required'
-							}
-						}
-					}
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -91,10 +84,14 @@ var KTModalCustomersAdd = function () {
 			}
 		);
 
-		// Revalidate country field. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="country"]')).on('change', function() {
+		// Revalidate select field. For more info, plase visit the official plugin site: https://select2.org/
+        $(form.querySelector('[name="spesialis"]')).on('change', function() {
             // Revalidate the field when an option is chosen
-            validator.revalidateField('country');
+            validator.revalidateField('spesialis');
+        });
+        $(form.querySelector('[name="jenis-kelamin"]')).on('change', function() {
+            // Revalidate the field when an option is chosen
+            validator.revalidateField('jenis-kelamin');
         });
 
 		// Action buttons
@@ -111,31 +108,64 @@ var KTModalCustomersAdd = function () {
 
 						// Disable submit button whilst loading
 						submitButton.disabled = true;
+						// console.log(submitButton.closest('form').getAttribute('action'));
+						// console.log(form);
+						
+						// Check axios library docs: https://axios-http.com/docs/intro
+						axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {
+							if (response) {
+								form.reset();
+	
+								// Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+								Swal.fire({
+									text: "Form has been successfully submitted!",
+									icon: "success",
+									buttonsStyling: false,
+									confirmButtonText: "Ok, got it!",
+									customClass: {
+										confirmButton: "btn btn-primary"
+									}
+								});
 
-						setTimeout(function() {
-							submitButton.removeAttribute('data-kt-indicator');
-							
+								console.log(response);
+	
+								// const redirectUrl = form.getAttribute('data-kt-redirect-url');
+	
+								// if (redirectUrl) {
+								// 	location.href = redirectUrl;
+								// }
+							} else {
+								// Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+								Swal.fire({
+									text: "Sorry, please try again.",
+									icon: "error",
+									buttonsStyling: false,
+									confirmButtonText: "Ok, got it!",
+									customClass: {
+										confirmButton: "btn btn-primary"
+									}
+								});
+							}
+						}).catch(function (error) {
 							Swal.fire({
-								text: "Form has been successfully submitted!",
-								icon: "success",
+								text: "Sorry, looks like there are some errors detected, please try again.",
+								icon: "error",
 								buttonsStyling: false,
 								confirmButtonText: "Ok, got it!",
 								customClass: {
 									confirmButton: "btn btn-primary"
 								}
-							}).then(function (result) {
-								if (result.isConfirmed) {
-									// Hide modal
-									modal.hide();
+							});
+						}).then(() => {
+								form.reset();
+								modal.hide();
+								submitButton.removeAttribute('data-kt-indicator');
+								// Enable submit button after loading
+								submitButton.disabled = false;
 
-									// Enable submit button after loading
-									submitButton.disabled = false;
-
-									// Redirect to customers list page
-									window.location = form.getAttribute("data-kt-redirect");
-								}
-							});							
-						}, 2000);   						
+								// Redirect to customers list page
+								// window.location = form.getAttribute("data-kt-redirect");
+						});				
 					} else {
 						Swal.fire({
 							text: "Sorry, looks like there are some errors detected, please try again.",
@@ -220,12 +250,23 @@ var KTModalCustomersAdd = function () {
         // Public functions
         init: function () {
             // Elements
-            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_customer'));
+            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_dokter'));
 
-            form = document.querySelector('#kt_modal_add_customer_form');
-            submitButton = form.querySelector('#kt_modal_add_customer_submit');
-            cancelButton = form.querySelector('#kt_modal_add_customer_cancel');
-			closeButton = form.querySelector('#kt_modal_add_customer_close');
+            form = document.querySelector('#kt_modal_add_dokter_form');
+            submitButton = form.querySelector('#kt_modal_add_dokter_submit');
+            cancelButton = form.querySelector('#kt_modal_add_dokter_cancel');
+			closeButton = form.querySelector('#kt_modal_add_dokter_close');
+
+			$(form.querySelector('[name="tanggal-lahir"]')).flatpickr({
+                // enableTime: !0,
+                enableTime: false,
+                dateFormat: "d, M Y",
+				minDate: "1960-2"
+            }),
+			$(form.querySelector('[name="tanggal-gabung"]')).flatpickr({
+                enableTime: false,
+                dateFormat: "d, M Y"
+            }),
 
             handleForm();
         }
@@ -234,5 +275,5 @@ var KTModalCustomersAdd = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-	KTModalCustomersAdd.init();
+	KTModalDoctorsAdd.init();
 });

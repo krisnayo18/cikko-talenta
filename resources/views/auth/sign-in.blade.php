@@ -58,7 +58,7 @@
 								<!--begin::Input group=-->
 								<div class="fv-row mb-8">
 									<!--begin::Email-->
-									<input type="text" placeholder="Email" name="email" autocomplete="off" value="jackeline.ward@example.org" class="form-control bg-transparent" />
+									<input type="text" placeholder="Email" name="email" autocomplete="off" value="mfujiati@example.org" class="form-control bg-transparent" />
 									<!--end::Email-->
 								</div>
 								<!--end::Input group=-->

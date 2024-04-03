@@ -37,7 +37,9 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+        return $request;
+        
     }
 
     /**

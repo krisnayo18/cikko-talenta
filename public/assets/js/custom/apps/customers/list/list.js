@@ -1,25 +1,25 @@
 "use strict";
-var KTCustomersList = function() {
+var KTDokterList = function() {
     var t, e, o, n, c = ()=>{
-        n.querySelectorAll('[data-kt-customer-table-filter="delete_row"]').forEach((e=>{
+        n.querySelectorAll('[data-kt-dokter-table-filter="delete_row"]').forEach((e=>{
             e.addEventListener("click", (function(e) {
                 e.preventDefault();
                 const o = e.target.closest("tr")
                   , n = o.querySelectorAll("td")[1].innerText;
                 Swal.fire({
-                    text: "Are you sure you want to delete " + n + "?",
+                    text: "Apakah Anda yakin untuk menghapus " + n + "?",
                     icon: "warning",
                     showCancelButton: !0,
                     buttonsStyling: !1,
-                    confirmButtonText: "Yes, delete!",
-                    cancelButtonText: "No, cancel",
+                    confirmButtonText: "Iya, hapus!",
+                    cancelButtonText: "Tidak, batalkan",
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
                     }
                 }).then((function(e) {
                     e.value ? Swal.fire({
-                        text: "You have deleted " + n + "!.",
+                        text: "Anda berhasil menghapus " + n + "!.",
                         icon: "success",
                         buttonsStyling: !1,
                         confirmButtonText: "Ok, got it!",
@@ -30,10 +30,10 @@ var KTCustomersList = function() {
                         t.row($(o)).remove().draw()
                     }
                     )) : "cancel" === e.dismiss && Swal.fire({
-                        text: n + " was not deleted.",
+                        text: n + " tidak berhasil dihapus.",
                         icon: "error",
                         buttonsStyling: !1,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok, dimengerti!",
                         customClass: {
                             confirmButton: "btn fw-bold btn-primary"
                         }
@@ -47,7 +47,7 @@ var KTCustomersList = function() {
     }
     , r = ()=>{
         const e = n.querySelectorAll('[type="checkbox"]')
-          , o = document.querySelector('[data-kt-customer-table-select="delete_selected"]');
+          , o = document.querySelector('[data-kt-dokter-table-select="delete_selected"]');
         e.forEach((t=>{
             t.addEventListener("click", (function() {
                 setTimeout((function() {
@@ -60,7 +60,7 @@ var KTCustomersList = function() {
         )),
         o.addEventListener("click", (function() {
             Swal.fire({
-                text: "Are you sure you want to delete selected customers?",
+                text: "Apakah anda yakin untuk menghapus data dokter yang dipilih?",
                 icon: "warning",
                 showCancelButton: !0,
                 buttonsStyling: !1,
@@ -72,7 +72,7 @@ var KTCustomersList = function() {
                 }
             }).then((function(o) {
                 o.value ? Swal.fire({
-                    text: "You have deleted all selected customers!.",
+                    text: "You have deleted all selected doctors!.",
                     icon: "success",
                     buttonsStyling: !1,
                     confirmButtonText: "Ok, got it!",
@@ -87,7 +87,7 @@ var KTCustomersList = function() {
                     n.querySelectorAll('[type="checkbox"]')[0].checked = !1
                 }
                 )) : "cancel" === o.dismiss && Swal.fire({
-                    text: "Selected customers was not deleted.",
+                    text: "Selected doctors was not deleted.",
                     icon: "error",
                     buttonsStyling: !1,
                     confirmButtonText: "Ok, got it!",
@@ -102,9 +102,9 @@ var KTCustomersList = function() {
     }
     ;
     const l = ()=>{
-        const t = document.querySelector('[data-kt-customer-table-toolbar="base"]')
-          , e = document.querySelector('[data-kt-customer-table-toolbar="selected"]')
-          , o = document.querySelector('[data-kt-customer-table-select="selected_count"]')
+        const t = document.querySelector('[data-kt-dokter-table-toolbar="base"]')
+          , e = document.querySelector('[data-kt-dokter-table-toolbar="selected"]')
+          , o = document.querySelector('[data-kt-dokter-table-select="selected_count"]')
           , c = n.querySelectorAll('tbody [type="checkbox"]');
         let r = !1
           , l = 0;
@@ -121,7 +121,7 @@ var KTCustomersList = function() {
     ;
     return {
         init: function() {
-            (n = document.querySelector("#kt_customers_table")) && (n.querySelectorAll("tbody tr").forEach((t=>{
+            (n = document.querySelector("#kt_dokter_table")) && (n.querySelectorAll("tbody tr").forEach((t=>{
                 const e = t.querySelectorAll("td")
                   , o = moment(e[5].innerHTML, "DD MMM YYYY, LT").format();
                 e[5].setAttribute("data-order", o)
@@ -145,13 +145,13 @@ var KTCustomersList = function() {
             }
             )),
             r(),
-            document.querySelector('[data-kt-customer-table-filter="search"]').addEventListener("keyup", (function(e) {
+            document.querySelector('[data-kt-dokter-table-filter="search"]').addEventListener("keyup", (function(e) {
                 t.search(e.target.value).draw()
             }
             )),
-            e = $('[data-kt-customer-table-filter="month"]'),
-            o = document.querySelectorAll('[data-kt-customer-table-filter="payment_type"] [name="payment_type"]'),
-            document.querySelector('[data-kt-customer-table-filter="filter"]').addEventListener("click", (function() {
+            e = $('[data-kt-dokter-table-filter="month"]'),
+            o = document.querySelectorAll('[data-kt-dokter-table-filter="payment_type"] [name="payment_type"]'),
+            document.querySelector('[data-kt-dokter-table-filter="filter"]').addEventListener("click", (function() {
                 const n = e.val();
                 let c = "";
                 o.forEach((t=>{
@@ -164,7 +164,7 @@ var KTCustomersList = function() {
             }
             )),
             c(),
-            document.querySelector('[data-kt-customer-table-filter="reset"]').addEventListener("click", (function() {
+            document.querySelector('[data-kt-dokter-table-filter="reset"]').addEventListener("click", (function() {
                 e.val(null).trigger("change"),
                 o[0].checked = !0,
                 t.search("").draw()
@@ -174,6 +174,6 @@ var KTCustomersList = function() {
     }
 }();
 KTUtil.onDOMContentLoaded((function() {
-    KTCustomersList.init()
+    KTDokterList.init()
 }
 ));
