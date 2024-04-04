@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dokter;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class DokterController extends Controller
 {
@@ -13,15 +14,17 @@ class DokterController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
-            $dokters = Dokter::query();
-            return DataTables::of($dokters)
-                ->json();
-        }
-
+        // if (request()->ajax()) {
+            // $dokters = Dokter::query();
+            // return DataTables::of($dokters)
+            //     ->toJson();
+            
         $dokters = Dokter::all();
+        //     return DataTables::of($dokters)->make();
+        // }
         // dd($dokters);
         return view('apps.dokter.list2', compact('dokters'));
+        // return view('apps.dokter.list2');
     }
 
     /**
@@ -37,8 +40,35 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        return $request;
+        // $this->validate($request,[
+        //     'nama' => 'required',
+        //     'email' => 'required',
+        //     'jenis_kelamin' => 'required',
+        //     'nomor_hp' => 'required',
+        //     'alamat' => 'required',
+        //     'spesialis' => 'required',
+        //     'tanggal_lahir' => 'required',
+        //     'tanggal_gabung' => 'required',
+        // ]);
+        
+        dd($request->tanggal_lahir);
+
+        
+        Dokter::create([
+            'nama' => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'email' => $request->email,
+            'nomor_hp' => $request->nomor_hp,
+            'alamat' => $request->alamat,
+            'spesialis' => $request->spesialis,
+            'tanggal_lahir' => date_format($request->tanggal_lahir, "YYYY-MM-DD"),
+            'tanggal_gabung' => date_format($request->tanggal_gabung,"YYYY-MM-DD"),
+        ]);
+
+        // DB::transaction(function () {
+          
+        // }, 5);
+        return response()->json(['success'=>'Laravel ajax example is being processed.']);
         
     }
 

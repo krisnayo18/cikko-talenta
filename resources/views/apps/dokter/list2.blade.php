@@ -6,7 +6,6 @@
 <script src="assets/js/custom/apps/customers/list/export.js"></script>
 <!-- <script src="assets/js/custom/apps/customers/list/add.js"></script> -->
 <script src="assets/js/custom/apps/customers/list/list.js"></script>
-<script src="assets/js/custom/apps/customers/list/list.js"></script>
 <script src="assets/js/custom/apps/customers/add.js"></script>
 <script src="assets/js/widgets.bundle.js"></script>
 <script src="assets/js/custom/widgets.js"></script>
@@ -15,6 +14,10 @@
 <script src="assets/js/custom/utilities/modals/create-app.js"></script>
 <script src="assets/js/custom/utilities/modals/users-search.js"></script>
 @endsection
+
+@push('scripts')
+
+@endpush
 
 <x-master title="Dokter" class="">
 	<x-dashboard>
@@ -160,14 +163,14 @@
 												</th>
 												<th class="min-w-125px">Nama</th>
 												<th class="min-w-125px">Telepon</th>
-												<!-- <th class="min-w-125px">Email</th> -->
 												<th class="min-w-125px">Spesialis</th>
 												<th class="min-w-125px">Joined Date</th>
 												<th class="text-end min-w-70px">Actions</th>
 											</tr>
 										</thead>
 										<tbody class="fw-semibold text-gray-600">
-											@foreach ($dokters as $dokter)
+											
+										@foreach ($dokters as $dokter)
 											<tr>
 												<td>
 													<div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -253,7 +256,7 @@
 														<label class="required fs-6 fw-semibold mb-2">Nama</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<input type="text" class="form-control form-control-solid" placeholder="Silahkan isi nama dokter" name="nama" value="" />
+														<input type="text" class="form-control form-control-solid" placeholder="Silahkan isi nama dokter" name="nama" value="Krisna" />
 														<!--end::Input-->
 													</div>
 													<!--end::Input group-->
@@ -272,7 +275,7 @@
 														</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<input type="email" class="form-control form-control-solid" placeholder="Silahkan isi alamat email" name="email" value="" />
+														<input type="email" class="form-control form-control-solid" placeholder="Silahkan isi alamat email" name="email" value="krisna@gmail.com" />
 														<!--end::Input-->
 													</div>
 													<!--end::Input group-->
@@ -282,7 +285,7 @@
 														<label class="fs-6 fw-semibold mb-2">Nomor Telepon</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<input type="text" class="form-control form-control-solid" placeholder="Silahkan isi nomor telepon" name="nomor-hp" />
+														<input type="text" class="form-control form-control-solid" placeholder="Silahkan isi nomor telepon" name="nomor_hp" value="081122223333" />
 														<!--end::Input-->
 													</div>
 													<!--end::Input group-->
@@ -292,7 +295,7 @@
 														<label class="fs-6 fw-semibold mb-2">Alamat</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<input type="text" class="form-control form-control-solid" placeholder="Silahkan isi alamat" name="alamat" />
+														<input type="text" class="form-control form-control-solid" placeholder="Silahkan isi alamat" name="alamat" value="waru"/>
 														<!--end::Input-->
 													</div>
 													<!--end::Input group-->
@@ -312,7 +315,7 @@
 															</i>
 															<!--end::Icon-->
 															<!--begin::Datepicker-->
-															<input class="form-control form-control-solid ps-12" placeholder="Pilih Tanggal" name="tanggal-lahir" />
+															<input class="form-control form-control-solid ps-12" placeholder="Pilih Tanggal" name="tanggal_lahir"/>
 															<!--end::Datepicker-->
 														</div>
 														<!--end::Input-->
@@ -334,7 +337,7 @@
 															</i>
 															<!--end::Icon-->
 															<!--begin::Datepicker-->
-															<input class="form-control form-control-solid ps-12" placeholder="Pilih Tanggal" name="tanggal-gabung" />
+															<input class="form-control form-control-solid ps-12" placeholder="Pilih Tanggal" name="tanggal_gabung" />
 															<!--end::Datepicker-->
 														</div>
 														<!--end::Input-->
@@ -356,9 +359,9 @@
 														</label>
 														<!--end::Label-->
 														<!--begin::Input-->
-														<select name="jenis-kelamin" aria-label="Pilih jenis kelamin" data-control="select2" data-placeholder="Pilih jenis kelamin..." data-dropdown-parent="#kt_modal_add_dokter" class="form-select form-select-solid fw-bold">
+														<select name="jenis_kelamin" aria-label="Pilih jenis kelamin" data-control="select2" data-placeholder="Pilih jenis kelamin..." data-dropdown-parent="#kt_modal_add_dokter" class="form-select form-select-solid fw-bold">
 															<option value="">Pilih Jenis Kelamin...</option>
-															<option value="L">Laki-laki</option>
+															<option value="L" selected>Laki-laki</option>
 															<option value="P">Perempuan</option>
 														</select>
 														<!--end::Input-->
@@ -381,7 +384,7 @@
 														<!--begin::Input-->
 														<select name="spesialis" aria-label="Pilih spesialis" data-control="select2" data-placeholder="Pilih spesialis..." data-dropdown-parent="#kt_modal_add_dokter" class="form-select form-select-solid fw-bold">
 															<option value="">Pilih spesialis...</option>
-															<option value="ZM">Zambia</option>
+															<option value="ZM" selected>Zambia</option>
 															<option value="ZW">Zimbabwe</option>
 														</select>
 														<!--end::Input-->

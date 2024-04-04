@@ -101,7 +101,7 @@ var KTModalDoctorsAdd = function () {
 			// Validate form before submit
 			if (validator) {
 				validator.validate().then(function (status) {
-					console.log('validated!');
+					// console.log('validated!');
 
 					if (status == 'Valid') {
 						submitButton.setAttribute('data-kt-indicator', 'on');
@@ -114,20 +114,23 @@ var KTModalDoctorsAdd = function () {
 						// Check axios library docs: https://axios-http.com/docs/intro
 						axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {
 							if (response) {
-								form.reset();
-	
-								// Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-								Swal.fire({
-									text: "Form has been successfully submitted!",
-									icon: "success",
-									buttonsStyling: false,
-									confirmButtonText: "Ok, got it!",
-									customClass: {
-										confirmButton: "btn btn-primary"
-									}
-								});
+								// form.reset();
 
-								console.log(response);
+								if(response.request['status'] == 200){
+									// $('#kt_dokter_table').DataTable().ajax.reload();
+								// Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+									Swal.fire({
+										text: "Form has been successfully submitted!",
+										icon: "success",
+										buttonsStyling: false,
+										confirmButtonText: "Ok, got it!",
+										customClass: {
+											confirmButton: "btn btn-primary"
+										}
+									});
+								}
+
+								// console.log(response);
 	
 								// const redirectUrl = form.getAttribute('data-kt-redirect-url');
 	
@@ -257,15 +260,25 @@ var KTModalDoctorsAdd = function () {
             cancelButton = form.querySelector('#kt_modal_add_dokter_cancel');
 			closeButton = form.querySelector('#kt_modal_add_dokter_close');
 
-			$(form.querySelector('[name="tanggal-lahir"]')).flatpickr({
+			$(form.querySelector('[name="tanggal_lahir"]')).flatpickr({
                 // enableTime: !0,
                 enableTime: false,
+				allowInput : true,
                 dateFormat: "d, M Y",
-				minDate: "1960-2"
+				// dateFormat: "YYYY-MM-DD",
+				minDate: "01, Jan 1950",
+				maxDate: "01, Jan 2010",
+				defaultDate: "01, Jan 1998",
             }),
-			$(form.querySelector('[name="tanggal-gabung"]')).flatpickr({
+			$(form.querySelector('[name="tanggal_gabung"]')).flatpickr({
                 enableTime: false,
-                dateFormat: "d, M Y"
+				allowInput : true,
+                dateFormat: "d, M Y",
+				// dateFormat: "YYYY-MM-DD",
+				minDate: "01, Jan 2000",
+				maxDate: "today",
+				defaultDate: "today"
+
             }),
 
             handleForm();

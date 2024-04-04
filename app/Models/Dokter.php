@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Dokter extends Model
 {
     use HasFactory;
+
+     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'nama',
+        'email',
+        'jenis_kelamin',
+        'nomor_hp',
+        'alamat',
+        'spesialis',
+        'tanggal_lahir',
+        'tanggal_gabung',
+    ];
 }
