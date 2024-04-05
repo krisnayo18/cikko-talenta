@@ -187,7 +187,7 @@
 												<!-- <td>{{$dokter->email}}</td> -->
 												<td>{{$dokter->spesialis}}</td>
 												<td>{{date('d-m-Y', strtotime($dokter->tanggal_gabung))}}</td>
-												<td class="text-end">
+												<td class="text-end column-action-dokter" data-id="{{$dokter->id}}">
 													<a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions 
 													<i class="ki-duotone ki-down fs-5 ms-1"></i></a>
 													<!--begin::Menu-->
@@ -199,12 +199,7 @@
 														<!--end::Menu item-->
 														<!--begin::Menu item-->
 														<div class="menu-item px-3">
-														{{--<form action="{{ route('dokters.destroy', $dokter->id) }}" method="POST">
-															@csrf
-															@method('DELETE')
-															<button class="menu-link px-3" type="submit">Delete</button>
-														</form>--}}
-															<a href="{{route('dokters.destroy', $dokter->id)}}" data-m class="menu-link px-3" data-kt-dokter-table-filter="delete_row">Delete</a>
+															<a href="{{route('dokters.destroy', $dokter->id)}}" class="menu-link px-3" data-kt-dokter-table-filter="delete_row">Delete</a>
 														</div>
 														<!--end::Menu item-->
 													</div>

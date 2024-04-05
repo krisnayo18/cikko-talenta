@@ -1,11 +1,14 @@
 "use strict";
 var KTDokterList = function() {
+    
     var t, e, o, n, c = ()=>{
         n.querySelectorAll('[data-kt-dokter-table-filter="delete_row"]').forEach((e=>{
             e.addEventListener("click", (function(e) {
                 e.preventDefault();
+                
                 const o = e.target.closest("tr")
                   , n = o.querySelectorAll("td")[1].innerText;
+              
                 Swal.fire({
                     text: "Apakah Anda yakin untuk menghapus " + n + "?",
                     icon: "warning",
@@ -18,6 +21,9 @@ var KTDokterList = function() {
                         cancelButton: "btn fw-bold btn-active-light-primary"
                     }
                 }).then((function(e) {
+                    var idDokter = $('.column-action-dokter').data("id");
+                    axios.delete('dokters/' + idDokter );
+                    
                     e.value ? Swal.fire({
                         text: "Anda berhasil menghapus " + n + "!.",
                         icon: "success",
@@ -121,6 +127,7 @@ var KTDokterList = function() {
     ;
     return {
         init: function() {
+           
             (n = document.querySelector("#kt_dokter_table")) && (n.querySelectorAll("tbody tr").forEach((t=>{
                 const e = t.querySelectorAll("td")
                   , o = moment(e[5].innerHTML, "DD MMM YYYY, LT").format();

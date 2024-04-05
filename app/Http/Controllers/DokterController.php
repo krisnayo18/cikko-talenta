@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dokter;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class DokterController extends Controller
@@ -14,17 +16,17 @@ class DokterController extends Controller
      */
     public function index()
     {
-        // if (request()->ajax()) {
-            // $dokters = Dokter::query();
-            // return DataTables::of($dokters)
-            //     ->toJson();
-            
-        $dokters = Dokter::all();
-        //     return DataTables::of($dokters)->make();
-        // }
-        // dd($dokters);
-        return view('apps.dokter.list2', compact('dokters'));
-        // return view('apps.dokter.list2');
+        if (request()->ajax()) {
+            $dokters = Dokter::query();
+            return DataTables::of($dokters)
+                ->toJson();
+            // return DataTables::of($dokters)->make();
+        }
+        else{
+            $dokters = Dokter::all();
+            // dd($dokters);
+            return view('apps.dokter.list2', compact('dokters'));
+        }
     }
 
     /**
@@ -40,19 +42,20 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request,[
-        //     'nama' => 'required',
-        //     'email' => 'required',
-        //     'jenis_kelamin' => 'required',
-        //     'nomor_hp' => 'required',
-        //     'alamat' => 'required',
-        //     'spesialis' => 'required',
-        //     'tanggal_lahir' => 'required',
-        //     'tanggal_gabung' => 'required',
-        // ]);
-        
-        dd($request->tanggal_lahir);
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'email' => 'required|unique:dokters,email',
+            'jenis_kelamin' => 'required',
+            'nomor_hp' => 'required',
+            'alamat' => 'required',
+            'spesialis' => 'required',
+            'tanggal_lahir' => 'required',
+            'tanggal_gabung' => 'required',
+        ]);
 
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()->all()]);
+        }
         
         Dokter::create([
             'nama' => $request->nama,
@@ -61,15 +64,17 @@ class DokterController extends Controller
             'nomor_hp' => $request->nomor_hp,
             'alamat' => $request->alamat,
             'spesialis' => $request->spesialis,
-            'tanggal_lahir' => date_format($request->tanggal_lahir, "YYYY-MM-DD"),
-            'tanggal_gabung' => date_format($request->tanggal_gabung,"YYYY-MM-DD"),
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tanggal_gabung' => $request->tanggal_gabung,
         ]);
 
-        // DB::transaction(function () {
-          
-        // }, 5);
-        return response()->json(['success'=>'Laravel ajax example is being processed.']);
-        
+        // if (request()->ajax()) {
+            // $dokters = Dokter::all();
+            // dd(DataTables::of($dokters)->toJson());
+            // return DataTables::of($dokters)->make();
+        // }
+        return response()->json(['data'=> $request]);
+        // return response()->json($dokters);
     }
 
     /**
@@ -104,6 +109,7 @@ class DokterController extends Controller
     public function destroy(string $id)
     {
         dd('delete'.$id);
+        // return response()->json(['data'=> $request]);
         // $teetime = Dokter::where('id', '=', $id)->firstOrFail();
         // $teetime->destroy();
     }

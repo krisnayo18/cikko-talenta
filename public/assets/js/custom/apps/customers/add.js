@@ -115,9 +115,9 @@ var KTModalDoctorsAdd = function () {
 						axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {
 							if (response) {
 								// form.reset();
-
-								if(response.request['status'] == 200){
-									// $('#kt_dokter_table').DataTable().ajax.reload();
+								console.log(response);
+								// $('#kt_dokter_table').DataTable().ajax.reload();
+								if(response.status == 200){
 								// Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
 									Swal.fire({
 										text: "Form has been successfully submitted!",
@@ -127,17 +127,30 @@ var KTModalDoctorsAdd = function () {
 										customClass: {
 											confirmButton: "btn btn-primary"
 										}
+									}).then((result) => {
+										if (result.isConfirmed) {
+											window.location = form.getAttribute("data-kt-redirect");
+										  }
 									});
 								}
-
-								// console.log(response);
-	
-								// const redirectUrl = form.getAttribute('data-kt-redirect-url');
-	
-								// if (redirectUrl) {
-								// 	location.href = redirectUrl;
-								// }
-							} else {
+								else if(data.errors) {
+									var values = '';
+									jQuery.each(data.errors, function (key, value) {
+										 values += value
+									});
+							
+									Swal.fire({
+										text: "Sorry, please try again.",
+										icon: "error",
+										buttonsStyling: false,
+										confirmButtonText: "Ok, got it!",
+										customClass: {
+											confirmButton: "btn btn-primary"
+										}
+									});
+								}
+							}
+							else {
 								// Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
 								Swal.fire({
 									text: "Sorry, please try again.",
@@ -165,9 +178,9 @@ var KTModalDoctorsAdd = function () {
 								submitButton.removeAttribute('data-kt-indicator');
 								// Enable submit button after loading
 								submitButton.disabled = false;
-
-								// Redirect to customers list page
-								// window.location = form.getAttribute("data-kt-redirect");
+								
+								// Redirect to dokters list page
+							
 						});				
 					} else {
 						Swal.fire({
@@ -255,6 +268,7 @@ var KTModalDoctorsAdd = function () {
             // Elements
             modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_dokter'));
 
+
             form = document.querySelector('#kt_modal_add_dokter_form');
             submitButton = form.querySelector('#kt_modal_add_dokter_submit');
             cancelButton = form.querySelector('#kt_modal_add_dokter_cancel');
@@ -264,8 +278,9 @@ var KTModalDoctorsAdd = function () {
                 // enableTime: !0,
                 enableTime: false,
 				allowInput : true,
-                dateFormat: "d, M Y",
-				// dateFormat: "YYYY-MM-DD",
+				altInput: !0,
+                dateFormat: "Y-m-d",
+				altFormat: "d, M Y",
 				minDate: "01, Jan 1950",
 				maxDate: "01, Jan 2010",
 				defaultDate: "01, Jan 1998",
@@ -273,12 +288,12 @@ var KTModalDoctorsAdd = function () {
 			$(form.querySelector('[name="tanggal_gabung"]')).flatpickr({
                 enableTime: false,
 				allowInput : true,
-                dateFormat: "d, M Y",
-				// dateFormat: "YYYY-MM-DD",
+				altInput: !0,
+                dateFormat: "Y-m-d",
+				altFormat: "d, M Y",
 				minDate: "01, Jan 2000",
 				maxDate: "today",
 				defaultDate: "today"
-
             }),
 
             handleForm();
