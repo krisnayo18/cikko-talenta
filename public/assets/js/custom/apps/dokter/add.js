@@ -1,1 +1,310 @@
-"use strict";var KTModalCustomersAdd=function(){var t,e,o,n,r,i;return{init:function(){i=new bootstrap.Modal(document.querySelector("#kt_modal_add_customer")),r=document.querySelector("#kt_modal_add_customer_form"),t=r.querySelector("#kt_modal_add_customer_submit"),e=r.querySelector("#kt_modal_add_customer_cancel"),o=r.querySelector("#kt_modal_add_customer_close"),n=FormValidation.formValidation(r,{fields:{name:{validators:{notEmpty:{message:"Customer name is required"}}},email:{validators:{notEmpty:{message:"Customer email is required"}}},"first-name":{validators:{notEmpty:{message:"First name is required"}}},"last-name":{validators:{notEmpty:{message:"Last name is required"}}},country:{validators:{notEmpty:{message:"Country is required"}}},address1:{validators:{notEmpty:{message:"Address 1 is required"}}},city:{validators:{notEmpty:{message:"City is required"}}},state:{validators:{notEmpty:{message:"State is required"}}},postcode:{validators:{notEmpty:{message:"Postcode is required"}}}},plugins:{trigger:new FormValidation.plugins.Trigger,bootstrap:new FormValidation.plugins.Bootstrap5({rowSelector:".fv-row",eleInvalidClass:"",eleValidClass:""})}}),$(r.querySelector('[name="country"]')).on("change",(function(){n.revalidateField("country")})),t.addEventListener("click",(function(e){e.preventDefault(),n&&n.validate().then((function(e){console.log("validated!"),"Valid"==e?(t.setAttribute("data-kt-indicator","on"),t.disabled=!0,setTimeout((function(){t.removeAttribute("data-kt-indicator"),Swal.fire({text:"Form has been successfully submitted!",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}}).then((function(e){e.isConfirmed&&(i.hide(),t.disabled=!1,window.location=r.getAttribute("data-kt-redirect"))}))}),2e3)):Swal.fire({text:"Sorry, looks like there are some errors detected, please try again.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}})}))})),e.addEventListener("click",(function(t){t.preventDefault(),Swal.fire({text:"Are you sure you would like to cancel?",icon:"warning",showCancelButton:!0,buttonsStyling:!1,confirmButtonText:"Yes, cancel it!",cancelButtonText:"No, return",customClass:{confirmButton:"btn btn-primary",cancelButton:"btn btn-active-light"}}).then((function(t){t.value?(r.reset(),i.hide()):"cancel"===t.dismiss&&Swal.fire({text:"Your form has not been cancelled!.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}})}))})),o.addEventListener("click",(function(t){t.preventDefault(),Swal.fire({text:"Are you sure you would like to cancel?",icon:"warning",showCancelButton:!0,buttonsStyling:!1,confirmButtonText:"Yes, cancel it!",cancelButtonText:"No, return",customClass:{confirmButton:"btn btn-primary",cancelButton:"btn btn-active-light"}}).then((function(t){t.value?(r.reset(),i.hide()):"cancel"===t.dismiss&&Swal.fire({text:"Your form has not been cancelled!.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}})}))}))}}}();KTUtil.onDOMContentLoaded((function(){KTModalCustomersAdd.init()}));
+"use strict";
+
+// Class definition
+var KTModalDoctorsAdd = function () {
+    var submitButton;
+    var cancelButton;
+	var closeButton;
+    var validator;
+    var form;
+    var modal;
+
+    // Init form inputs
+    var handleForm = function () {
+        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+		validator = FormValidation.formValidation(
+			form,
+			{
+				fields: {
+                    'nama': {
+						validators: {
+							notEmpty: {
+								message: 'Nama dokter dibutuhkan'
+							}
+						}
+					},
+                    'jenis-kelamin': {
+						validators: {
+							notEmpty: {
+								message: 'Gender is required'
+							}
+						}
+					},
+                    'email': {
+						validators: {
+							notEmpty: {
+								message: 'Doctor email is required'
+							}
+						}
+					},
+					'nomor-hp': {
+						validators: {
+							notEmpty: {
+								message: 'Phone Number is required'
+							}
+						}
+					},
+					'tanggal-lahir': {
+						validators: {
+							notEmpty: {
+								message: 'Phone Number is required'
+							}
+						}
+					},
+					'tanggal-gabung': {
+						validators: {
+							notEmpty: {
+								message: 'Phone Number is required'
+							}
+						}
+					},
+					'spesialis': {
+						validators: {
+							notEmpty: {
+								message: 'Silahkan isi Spesialis'
+							}
+						}
+					},
+					'alamat': {
+						validators: {
+							notEmpty: {
+								message: 'Address is required'
+							}
+						}
+					},
+				},
+				plugins: {
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap5({
+						rowSelector: '.fv-row',
+                        eleInvalidClass: '',
+                        eleValidClass: ''
+					})
+				}
+			}
+		);
+
+		// Revalidate select field. For more info, plase visit the official plugin site: https://select2.org/
+        $(form.querySelector('[name="spesialis"]')).on('change', function() {
+            // Revalidate the field when an option is chosen
+            validator.revalidateField('spesialis');
+        });
+        $(form.querySelector('[name="jenis-kelamin"]')).on('change', function() {
+            // Revalidate the field when an option is chosen
+            validator.revalidateField('jenis-kelamin');
+        });
+
+		// Action buttons
+		submitButton.addEventListener('click', function (e) {
+			e.preventDefault();
+
+
+			
+
+			// Validate form before submit
+			if (validator) {
+				validator.validate().then(function (status) {
+					// console.log('validated!');
+
+					if (status == 'Valid') {
+						submitButton.setAttribute('data-kt-indicator', 'on');
+
+						// Disable submit button whilst loading
+						submitButton.disabled = true;
+						// console.log(submitButton.closest('form').getAttribute('action'));
+						// console.log(form);
+						
+						// Check axios library docs: https://axios-http.com/docs/intro
+						axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {
+							if (response) {
+								// form.reset();
+								console.log(response);
+								// $('#kt_dokter_table').DataTable().ajax.reload();
+								if(response.status == 200){
+								// Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+									Swal.fire({
+										text: "Form has been successfully submitted!",
+										icon: "success",
+										buttonsStyling: false,
+										confirmButtonText: "Ok, got it!",
+										customClass: {
+											confirmButton: "btn btn-primary"
+										}
+									}).then((result) => {
+										if (result.isConfirmed) {
+											window.location = form.getAttribute("data-kt-redirect");
+										  }
+									});
+								}
+								else if(data.errors) {
+									var values = '';
+									jQuery.each(data.errors, function (key, value) {
+										 values += value
+									});
+							
+									Swal.fire({
+										text: "Sorry, please try again.",
+										icon: "error",
+										buttonsStyling: false,
+										confirmButtonText: "Ok, got it!",
+										customClass: {
+											confirmButton: "btn btn-primary"
+										}
+									});
+								}
+							}
+							else {
+								// Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+								Swal.fire({
+									text: "Sorry, please try again.",
+									icon: "error",
+									buttonsStyling: false,
+									confirmButtonText: "Ok, got it!",
+									customClass: {
+										confirmButton: "btn btn-primary"
+									}
+								});
+							}
+						}).catch(function (error) {
+							Swal.fire({
+								text: "Sorry, looks like there are some errors detected, please try again.",
+								icon: "error",
+								buttonsStyling: false,
+								confirmButtonText: "Ok, got it!",
+								customClass: {
+									confirmButton: "btn btn-primary"
+								}
+							});
+						}).then(() => {
+								form.reset();
+								modal.hide();
+								submitButton.removeAttribute('data-kt-indicator');
+								// Enable submit button after loading
+								submitButton.disabled = false;
+								
+								// Redirect to dokters list page
+							
+						});				
+					} else {
+						Swal.fire({
+							text: "Sorry, looks like there are some errors detected, please try again.",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "Ok, got it!",
+							customClass: {
+								confirmButton: "btn btn-primary"
+							}
+						});
+					}
+				});
+			}
+		});
+
+        cancelButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                text: "Are you sure you would like to cancel?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, cancel it!",
+                cancelButtonText: "No, return",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-active-light"
+                }
+            }).then(function (result) {
+                if (result.value) {
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal				
+                } else if (result.dismiss === 'cancel') {
+                    Swal.fire({
+                        text: "Your form has not been cancelled!.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                        }
+                    });
+                }
+            });
+        });
+
+		closeButton.addEventListener('click', function(e){
+			e.preventDefault();
+
+            Swal.fire({
+                text: "Are you sure you would like to cancel?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, cancel it!",
+                cancelButtonText: "No, return",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    cancelButton: "btn btn-active-light"
+                }
+            }).then(function (result) {
+                if (result.value) {
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal				
+                } else if (result.dismiss === 'cancel') {
+                    Swal.fire({
+                        text: "Your form has not been cancelled!.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                        }
+                    });
+                }
+            });
+		})
+    }
+
+    return {
+        // Public functions
+        init: function () {
+            // Elements
+            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_dokter'));
+
+
+            form = document.querySelector('#kt_modal_add_dokter_form');
+            submitButton = form.querySelector('#kt_modal_add_dokter_submit');
+            cancelButton = form.querySelector('#kt_modal_add_dokter_cancel');
+			closeButton = form.querySelector('#kt_modal_add_dokter_close');
+
+			$(form.querySelector('[name="tanggal_lahir"]')).flatpickr({
+                // enableTime: !0,
+                enableTime: false,
+				allowInput : true,
+				altInput: !0,
+                dateFormat: "Y-m-d",
+				altFormat: "d, M Y",
+				minDate: "01, Jan 1950",
+				maxDate: "01, Jan 2010",
+				defaultDate: "01, Jan 1998",
+            }),
+			$(form.querySelector('[name="tanggal_gabung"]')).flatpickr({
+                enableTime: false,
+				allowInput : true,
+				altInput: !0,
+                dateFormat: "Y-m-d",
+				altFormat: "d, M Y",
+				minDate: "01, Jan 2000",
+				maxDate: "today",
+				defaultDate: "today"
+            }),
+
+            handleForm();
+        }
+    };
+}();
+
+// On document ready
+KTUtil.onDOMContentLoaded(function () {
+	KTModalDoctorsAdd.init();
+});

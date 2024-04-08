@@ -25,7 +25,7 @@ class DokterController extends Controller
         else{
             $dokters = Dokter::all();
             // dd($dokters);
-            return view('apps.dokter.list2', compact('dokters'));
+            return view('apps.dokter.list', compact('dokters'));
         }
     }
 
@@ -106,11 +106,16 @@ class DokterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id) 
     {
-        dd('delete'.$id);
-        // return response()->json(['data'=> $request]);
-        // $teetime = Dokter::where('id', '=', $id)->firstOrFail();
-        // $teetime->destroy();
+        if($id) {
+            $record = Dokter::find($id);
+            if ($record) {
+                $record->delete();
+                return response()->json(['success'=> 'berhasil menghapus data dokter dengan id-'.$id]);
+            }
+            else  return response()->json(['error'=> 'gagal menemukan data dokter dengan id-'.$id]);
+        }
+        else return response()->json(['error'=> 'data id tidak ada']);
     }
 }

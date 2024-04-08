@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Perawat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PerawatController extends Controller
 {
@@ -22,7 +23,7 @@ class PerawatController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -30,7 +31,33 @@ class PerawatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'email' => 'required|unique:perawats,email',
+            'jenis_kelamin' => 'required',
+            'nomor_hp' => 'required',
+            'alamat' => 'required',
+            'bagian' => 'required',
+            'tanggal_lahir' => 'required',
+            'tanggal_gabung' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()->all()]);
+        }
+        
+        Perawat::create([
+            'nama' => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'email' => $request->email,
+            'nomor_hp' => $request->nomor_hp,
+            'alamat' => $request->alamat,
+            'bagian' => $request->bagian,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tanggal_gabung' => $request->tanggal_gabung,
+        ]);
+
+        return response()->json(['data'=> $request]);
     }
 
     /**
@@ -63,6 +90,14 @@ class PerawatController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if($id) {
+            $record = Perawat::find($id);
+            if ($record) {
+                $record->delete();
+                return response()->json(['success'=> 'berhasil menghapus data dokter dengan id-'.$id]);
+            }
+            else  return response()->json(['error'=> 'gagal menemukan data dokter dengan id-'.$id]);
+        }
+        else return response()->json(['error'=> 'data id tidak ada']);
     }
 }

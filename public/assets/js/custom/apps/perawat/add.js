@@ -1,7 +1,7 @@
 "use strict";
 
 // Class definition
-var KTModalDoctorsAdd = function () {
+var KTModalPerawatAdd = function () {
     var submitButton;
     var cancelButton;
 	var closeButton;
@@ -19,7 +19,7 @@ var KTModalDoctorsAdd = function () {
                     'nama': {
 						validators: {
 							notEmpty: {
-								message: 'Nama dokter dibutuhkan'
+								message: 'Nama perawat tidak boleh kosong'
 							}
 						}
 					},
@@ -33,7 +33,7 @@ var KTModalDoctorsAdd = function () {
                     'email': {
 						validators: {
 							notEmpty: {
-								message: 'Doctor email is required'
+								message: 'Nurse email is required'
 							}
 						}
 					},
@@ -47,21 +47,21 @@ var KTModalDoctorsAdd = function () {
 					'tanggal-lahir': {
 						validators: {
 							notEmpty: {
-								message: 'Phone Number is required'
+								message: 'Tanggal lahir tidak boleh kosong'
 							}
 						}
 					},
 					'tanggal-gabung': {
 						validators: {
 							notEmpty: {
-								message: 'Phone Number is required'
+								message: 'Tanggal gabung tidak boleh kosong'
 							}
 						}
 					},
-					'spesialis': {
+					'bagian': {
 						validators: {
 							notEmpty: {
-								message: 'Silahkan isi Spesialis'
+								message: 'Silahkan isi bagian'
 							}
 						}
 					},
@@ -85,9 +85,9 @@ var KTModalDoctorsAdd = function () {
 		);
 
 		// Revalidate select field. For more info, plase visit the official plugin site: https://select2.org/
-        $(form.querySelector('[name="spesialis"]')).on('change', function() {
+        $(form.querySelector('[name="bagian"]')).on('change', function() {
             // Revalidate the field when an option is chosen
-            validator.revalidateField('spesialis');
+            validator.revalidateField('bagian');
         });
         $(form.querySelector('[name="jenis-kelamin"]')).on('change', function() {
             // Revalidate the field when an option is chosen
@@ -97,7 +97,6 @@ var KTModalDoctorsAdd = function () {
 		// Action buttons
 		submitButton.addEventListener('click', function (e) {
 			e.preventDefault();
-
 			// Validate form before submit
 			if (validator) {
 				validator.validate().then(function (status) {
@@ -116,8 +115,10 @@ var KTModalDoctorsAdd = function () {
 							if (response) {
 								// form.reset();
 								console.log(response);
-								// $('#kt_dokter_table').DataTable().ajax.reload();
-								if(response.status == 200){
+								
+								if(!response.error){
+									// $data = json_decode($response);
+									// console.log($data);
 								// Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
 									Swal.fire({
 										text: "Form has been successfully submitted!",
@@ -133,7 +134,7 @@ var KTModalDoctorsAdd = function () {
 										  }
 									});
 								}
-								else if(data.errors) {
+								else if(response.errors) {
 									var values = '';
 									jQuery.each(data.errors, function (key, value) {
 										 values += value
@@ -178,9 +179,6 @@ var KTModalDoctorsAdd = function () {
 								submitButton.removeAttribute('data-kt-indicator');
 								// Enable submit button after loading
 								submitButton.disabled = false;
-								
-								// Redirect to dokters list page
-							
 						});				
 					} else {
 						Swal.fire({
@@ -266,13 +264,13 @@ var KTModalDoctorsAdd = function () {
         // Public functions
         init: function () {
             // Elements
-            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_dokter'));
+            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_perawat'));
 
 
-            form = document.querySelector('#kt_modal_add_dokter_form');
-            submitButton = form.querySelector('#kt_modal_add_dokter_submit');
-            cancelButton = form.querySelector('#kt_modal_add_dokter_cancel');
-			closeButton = form.querySelector('#kt_modal_add_dokter_close');
+            form = document.querySelector('#kt_modal_add_perawat_form');
+            submitButton = form.querySelector('#kt_modal_add_perawat_submit');
+            cancelButton = form.querySelector('#kt_modal_add_perawat_cancel');
+			closeButton = form.querySelector('#kt_modal_add_perawat_close');
 
 			$(form.querySelector('[name="tanggal_lahir"]')).flatpickr({
                 // enableTime: !0,
@@ -303,5 +301,5 @@ var KTModalDoctorsAdd = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-	KTModalDoctorsAdd.init();
+	KTModalPerawatAdd.init();
 });

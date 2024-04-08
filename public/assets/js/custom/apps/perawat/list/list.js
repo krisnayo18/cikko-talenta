@@ -1,16 +1,16 @@
 "use strict";
-var KTDokterList = function() {
+var KTPerawatList = function() {
     
     var t, e, o, n, c = ()=>{
-        n.querySelectorAll('[data-kt-dokter-table-filter="delete_row"]').forEach((e=>{
+        n.querySelectorAll('[data-kt-perawat-table-filter="delete_row"]').forEach((e=>{
             e.addEventListener("click", (function(e) {
                 e.preventDefault();
                 
                 const o = e.target.closest("tr")
                   , n = o.querySelectorAll("td")[1].innerText;
 
-                const idDokter = o.querySelectorAll("td")[5].getAttribute('data-id');
-                console.log(idDokter);
+                const idPerawat = o.querySelectorAll("td")[5].getAttribute('data-id');
+                console.log(idPerawat);
               
                 Swal.fire({
                     text: "Apakah Anda yakin untuk menghapus " + n + "?",
@@ -24,8 +24,7 @@ var KTDokterList = function() {
                         cancelButton: "btn fw-bold btn-active-light-primary"
                     }
                 }).then((function(e) {
-                    // var idDokter = $('.column-action-dokter').data("id");
-                    e.value ? axios.delete('dokters/' + idDokter ).then(function (response){
+                    e.value ? axios.delete('perawats/' + idPerawat ).then(function (response){
                         console.log(response);
                         if (response) {
                             Swal.fire({
@@ -80,10 +79,13 @@ var KTDokterList = function() {
     }
     , r = ()=>{
         const e = n.querySelectorAll('[type="checkbox"]')
-          , o = document.querySelector('[data-kt-dokter-table-select="delete_selected"]');
+          , o = document.querySelector('[data-kt-perawat-table-select="delete_selected"]');
         e.forEach((t=>{
             t.addEventListener("click", (function() {
+                if($(".checkbox-perawat").prop('checked') == true) console.log('iya');
+                else console.log('tidak');
                 setTimeout((function() {
+                    
                     l()
                 }
                 ), 50)
@@ -92,8 +94,21 @@ var KTDokterList = function() {
         }
         )),
         o.addEventListener("click", (function() {
+
+           
+
+            // const k = o.target.closest("tr");
+            console.log(o);
+            var idPerawat;
+            // e.forEach((e=>{
+            //             console.log(t.row());
+            //         }
+            // ));
+            idPerawat =   k.querySelectorAll("[type='checkbox']")[0].getAttribute('data-id');
+            console.log(idPerawat);
+            
             Swal.fire({
-                text: "Apakah anda yakin untuk menghapus data dokter yang dipilih?",
+                text: "Apakah anda yakin untuk menghapus data perawat yang dipilih?",
                 icon: "warning",
                 showCancelButton: !0,
                 buttonsStyling: !1,
@@ -104,40 +119,89 @@ var KTDokterList = function() {
                     cancelButton: "btn fw-bold btn-active-light-primary"
                 }
             }).then((function(o) {
-                o.value ? Swal.fire({
-                    text: "You have deleted all selected doctors!.",
-                    icon: "success",
-                    buttonsStyling: !1,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-primary"
-                    }
-                }).then((function() {
-                    e.forEach((e=>{
-                        e.checked && t.row($(e.closest("tbody tr"))).remove().draw()
-                    }
-                    ));
-                    n.querySelectorAll('[type="checkbox"]')[0].checked = !1
-                }
-                )) : "cancel" === o.dismiss && Swal.fire({
-                    text: "Selected doctors was not deleted.",
-                    icon: "error",
-                    buttonsStyling: !1,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-primary"
-                    }
-                })
+               
+                // o.value ? axios.delete('perawats/', $idPerawat ).then(function (response){
+                //     console.log(response);
+                //     if (response) {
+                //         Swal.fire({
+                //             text: "Anda berhasil menghapus " + n + "!.",
+                //             icon: "success",
+                //             buttonsStyling: !1,
+                //             confirmButtonText: "Ok, got it!",
+                //             customClass: {
+                //                 confirmButton: "btn fw-bold btn-primary"
+                //             }
+                //         })
+                //         t.row($(o)).remove().draw()
+                //     }
+                //     else {
+                //         Swal.fire({
+                //             text: "Sorry, please try again.",
+                //             icon: "error",
+                //             buttonsStyling: false,
+                //             confirmButtonText: "Ok, got it!",
+                //             customClass: {
+                //                 confirmButton: "btn btn-primary"
+                //             }
+                //         });
+                //     }
+
+                // }).catch(function(error) {
+                //     Swal.fire({
+                //         text: "Sorry, looks like there are some errors detected, please try again.",
+                //         icon: "error",
+                //         buttonsStyling: false,
+                //         confirmButtonText: "Ok, got it!",
+                //         customClass: {
+                //             confirmButton: "btn btn-primary"
+                //         }
+                //     });
+                //     console.log(error);
+                // }): "cancel" === e.dismiss && Swal.fire({
+                //         text: n + " tidak berhasil dihapus.",
+                //         icon: "error",
+                //         buttonsStyling: !1,
+                //         confirmButtonText: "Ok, dimengerti!",
+                //         customClass: {
+                //         confirmButton: "btn fw-bold btn-primary"
+                //     }
+                // })
+
+
+
+                // o.value ? Swal.fire({
+                //     text: "You have deleted all selected doctors!.",
+                //     icon: "success",
+                //     buttonsStyling: !1,
+                //     confirmButtonText: "Ok, got it!",
+                //     customClass: {
+                //         confirmButton: "btn fw-bold btn-primary"
+                //     }
+                // }).then((function() {
+                //     e.forEach((e=>{
+                //         e.checked && t.row($(e.closest("tbody tr"))).remove().draw()
+                //     }
+                //     ));
+                //     n.querySelectorAll('[type="checkbox"]')[0].checked = !1
+                // }
+                // )) : "cancel" === o.dismiss && Swal.fire({
+                //     text: "Selected nurses was not deleted.",
+                //     icon: "error",
+                //     buttonsStyling: !1,
+                //     confirmButtonText: "Ok, got it!",
+                //     customClass: {
+                //         confirmButton: "btn fw-bold btn-primary"
+                //     }
+                // })
             }
             ))
         }
         ))
-    }
-    ;
+    };
     const l = ()=>{
-        const t = document.querySelector('[data-kt-dokter-table-toolbar="base"]')
-          , e = document.querySelector('[data-kt-dokter-table-toolbar="selected"]')
-          , o = document.querySelector('[data-kt-dokter-table-select="selected_count"]')
+        const t = document.querySelector('[data-kt-perawat-table-toolbar="base"]')
+          , e = document.querySelector('[data-kt-perawat-table-toolbar="selected"]')
+          , o = document.querySelector('[data-kt-perawat-table-select="selected_count"]')
           , c = n.querySelectorAll('tbody [type="checkbox"]');
         let r = !1
           , l = 0;
@@ -155,7 +219,7 @@ var KTDokterList = function() {
     return {
         init: function() {
            
-            (n = document.querySelector("#kt_dokter_table")) && (n.querySelectorAll("tbody tr").forEach((t=>{
+            (n = document.querySelector("#kt_perawat_table")) && (n.querySelectorAll("tbody tr").forEach((t=>{
                 const e = t.querySelectorAll("td")
                   , o = moment(e[5].innerHTML, "DD MMM YYYY, LT").format();
                 e[5].setAttribute("data-order", o)
@@ -179,13 +243,13 @@ var KTDokterList = function() {
             }
             )),
             r(),
-            document.querySelector('[data-kt-dokter-table-filter="search"]').addEventListener("keyup", (function(e) {
+            document.querySelector('[data-kt-perawat-table-filter="search"]').addEventListener("keyup", (function(e) {
                 t.search(e.target.value).draw()
             }
             )),
-            e = $('[data-kt-dokter-table-filter="month"]'),
-            o = document.querySelectorAll('[data-kt-dokter-table-filter="payment_type"] [name="payment_type"]'),
-            document.querySelector('[data-kt-dokter-table-filter="filter"]').addEventListener("click", (function() {
+            e = $('[data-kt-perawat-table-filter="month"]'),
+            o = document.querySelectorAll('[data-kt-perawat-table-filter="payment_type"] [name="payment_type"]'),
+            document.querySelector('[data-kt-perawat-table-filter="filter"]').addEventListener("click", (function() {
                 const n = e.val();
                 let c = "";
                 o.forEach((t=>{
@@ -198,7 +262,7 @@ var KTDokterList = function() {
             }
             )),
             c(),
-            document.querySelector('[data-kt-dokter-table-filter="reset"]').addEventListener("click", (function() {
+            document.querySelector('[data-kt-perawat-table-filter="reset"]').addEventListener("click", (function() {
                 e.val(null).trigger("change"),
                 o[0].checked = !0,
                 t.search("").draw()
@@ -208,6 +272,6 @@ var KTDokterList = function() {
     }
 }();
 KTUtil.onDOMContentLoaded((function() {
-        KTDokterList.init()
+        KTPerawatList.init()
     }
 ));

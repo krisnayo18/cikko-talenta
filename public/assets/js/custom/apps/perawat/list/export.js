@@ -1,14 +1,14 @@
 "use strict";
-var KTCustomersExport = function() {
+var KTPerawatsExport = function() {
     var t, e, n, o, r, i, a;
     return {
         init: function() {
-            t = document.querySelector("#kt_customers_export_modal"),
+            t = document.querySelector("#kt_perawats_export_modal"),
             a = new bootstrap.Modal(t),
-            i = document.querySelector("#kt_customers_export_form"),
-            e = i.querySelector("#kt_customers_export_submit"),
-            n = i.querySelector("#kt_customers_export_cancel"),
-            o = t.querySelector("#kt_customers_export_close"),
+            i = document.querySelector("#kt_perawats_export_form"),
+            e = i.querySelector("#kt_perawats_export_submit"),
+            n = i.querySelector("#kt_perawats_export_cancel"),
+            o = t.querySelector("#kt_perawats_export_close"),
             r = FormValidation.formValidation(i, {
                 fields: {
                     date: {
@@ -132,6 +132,6 @@ var KTCustomersExport = function() {
     }
 }();
 KTUtil.onDOMContentLoaded((function() {
-    KTCustomersExport.init()
+    KTPerawatsExport.init()
 }
 ));
