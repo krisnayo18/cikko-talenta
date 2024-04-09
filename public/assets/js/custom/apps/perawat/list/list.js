@@ -82,10 +82,7 @@ var KTPerawatList = function() {
           , o = document.querySelector('[data-kt-perawat-table-select="delete_selected"]');
         e.forEach((t=>{
             t.addEventListener("click", (function() {
-                if($(".checkbox-perawat").prop('checked') == true) console.log('iya');
-                else console.log('tidak');
                 setTimeout((function() {
-                    
                     l()
                 }
                 ), 50)
@@ -94,19 +91,6 @@ var KTPerawatList = function() {
         }
         )),
         o.addEventListener("click", (function() {
-
-           
-
-            // const k = o.target.closest("tr");
-            console.log(o);
-            var idPerawat;
-            // e.forEach((e=>{
-            //             console.log(t.row());
-            //         }
-            // ));
-            idPerawat =   k.querySelectorAll("[type='checkbox']")[0].getAttribute('data-id');
-            console.log(idPerawat);
-            
             Swal.fire({
                 text: "Apakah anda yakin untuk menghapus data perawat yang dipilih?",
                 icon: "warning",
@@ -119,84 +103,63 @@ var KTPerawatList = function() {
                     cancelButton: "btn fw-bold btn-active-light-primary"
                 }
             }).then((function(o) {
-               
-                // o.value ? axios.delete('perawats/', $idPerawat ).then(function (response){
-                //     console.log(response);
-                //     if (response) {
-                //         Swal.fire({
-                //             text: "Anda berhasil menghapus " + n + "!.",
-                //             icon: "success",
-                //             buttonsStyling: !1,
-                //             confirmButtonText: "Ok, got it!",
-                //             customClass: {
-                //                 confirmButton: "btn fw-bold btn-primary"
-                //             }
-                //         })
-                //         t.row($(o)).remove().draw()
-                //     }
-                //     else {
-                //         Swal.fire({
-                //             text: "Sorry, please try again.",
-                //             icon: "error",
-                //             buttonsStyling: false,
-                //             confirmButtonText: "Ok, got it!",
-                //             customClass: {
-                //                 confirmButton: "btn btn-primary"
-                //             }
-                //         });
-                //     }
+                var all_ids = [];
+                $('input:checkbox[name=ids]:checked').each(function(){
+                    all_ids.push($(this).data('id'));
+                });
+                console.log(all_ids);
 
-                // }).catch(function(error) {
-                //     Swal.fire({
-                //         text: "Sorry, looks like there are some errors detected, please try again.",
-                //         icon: "error",
-                //         buttonsStyling: false,
-                //         confirmButtonText: "Ok, got it!",
-                //         customClass: {
-                //             confirmButton: "btn btn-primary"
-                //         }
-                //     });
-                //     console.log(error);
-                // }): "cancel" === e.dismiss && Swal.fire({
-                //         text: n + " tidak berhasil dihapus.",
-                //         icon: "error",
-                //         buttonsStyling: !1,
-                //         confirmButtonText: "Ok, dimengerti!",
-                //         customClass: {
-                //         confirmButton: "btn fw-bold btn-primary"
-                //     }
-                // })
-
-
-
-                // o.value ? Swal.fire({
-                //     text: "You have deleted all selected doctors!.",
-                //     icon: "success",
-                //     buttonsStyling: !1,
-                //     confirmButtonText: "Ok, got it!",
-                //     customClass: {
-                //         confirmButton: "btn fw-bold btn-primary"
-                //     }
-                // }).then((function() {
-                //     e.forEach((e=>{
-                //         e.checked && t.row($(e.closest("tbody tr"))).remove().draw()
-                //     }
-                //     ));
-                //     n.querySelectorAll('[type="checkbox"]')[0].checked = !1
-                // }
-                // )) : "cancel" === o.dismiss && Swal.fire({
-                //     text: "Selected nurses was not deleted.",
-                //     icon: "error",
-                //     buttonsStyling: !1,
-                //     confirmButtonText: "Ok, got it!",
-                //     customClass: {
-                //         confirmButton: "btn fw-bold btn-primary"
-                //     }
-                // })
-            }
-            ))
-        }
-        ))
+                o.value ? axios.delete('perawats/' + all_ids.toString()).then(function (response){
+                    console.log(response);
+                    if (response) { 
+                        Swal.fire({
+                            text: "Anda berhasil menghapus data perawat yang dipilih !.",
+                            icon: "success",
+                            buttonsStyling: !1,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-primary"
+                            }
+                        })
+                        e.forEach((e=>{
+                            e.checked && t.row($(e.closest("tbody tr"))).remove().draw();
+                        }
+                        ));
+                        n.querySelectorAll('[type="checkbox"]')[0].checked = !1;
+                    }
+                    else {
+                        Swal.fire({
+                            text: "Sorry, please try again.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        });
+                    }  
+                }).catch(function(error) {
+                    Swal.fire({
+                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    });
+                    console.log(error);
+                }): "cancel" === e.dismiss && Swal.fire({
+                        text: n + " tidak berhasil dihapus.",
+                        icon: "error",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Ok, dimengerti!",
+                        customClass: {
+                        confirmButton: "btn fw-bold btn-primary"
+                    }
+                })
+            }))
+        }))
     };
     const l = ()=>{
         const t = document.querySelector('[data-kt-perawat-table-toolbar="base"]')

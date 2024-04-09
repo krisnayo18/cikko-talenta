@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Perawat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class PerawatController extends Controller
@@ -88,16 +89,30 @@ class PerawatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        if($id) {
-            $record = Perawat::find($id);
-            if ($record) {
-                $record->delete();
-                return response()->json(['success'=> 'berhasil menghapus data dokter dengan id-'.$id]);
+    public function destroy(string $ids)
+    {   
+        if($ids) {
+            $arrayIds = explode(",", $ids);
+            // dd($arrayIds);
+            
+            foreach ($arrayIds as $id) {
+                Perawat::destroy($id);
             }
-            else  return response()->json(['error'=> 'gagal menemukan data dokter dengan id-'.$id]);
+            // return response()->json(['success'=> 'berhasil menghapus data perawat dengan id-'.$id]);
+            // $record = Perawat::find($id);
+            // if ($record) {
+            //     $record->delete();
+                return response()->json(['success'=> 'berhasil menghapus data perawat dengan id-'.$ids]);
+            //     // return response()->json(['success'=> 'berhasil menghapus data perawat dengan id-'.$id]);
+            // }
+            // else  return response()->json(['error'=> 'gagal menemukan data perawat dengan id-'.$id]);
         }
         else return response()->json(['error'=> 'data id tidak ada']);
     }
+
+    // public function deleteAll(Request $request) 
+    // {
+    //     dd($request);
+    //     return response()->json(['success'=> 'berhasil menghapus data dengan id-'.$request]);
+    // }
 }

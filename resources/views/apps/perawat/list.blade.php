@@ -72,6 +72,13 @@
 											<!--begin::Input-->
 											<select class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-perawat-table-filter="month" data-dropdown-parent="#kt-toolbar-filter">
 												<option></option>
+												<option value="jan">January</option>
+												<option value="feb">February</option>
+												<option value="march">March</option>
+												<option value="april">April</option>
+												<option value="may">May</option>
+												<option value="june">June</option>
+												<option value="july">July</option>
 												<option value="aug">August</option>
 												<option value="sep">September</option>
 												<option value="oct">October</option>
@@ -84,7 +91,7 @@
 										<!--begin::Input group-->
 										<div class="mb-10">
 											<!--begin::Label-->
-											<label class="form-label fs-5 fw-semibold mb-3">Payment Type:</label>
+											<label class="form-label fs-5 fw-semibold mb-3">Jenis Bagian:</label>
 											<!--end::Label-->
 											<!--begin::Options-->
 											<div class="d-flex flex-column flex-wrap fw-semibold" data-kt-perawat-table-filter="payment_type">
@@ -95,21 +102,9 @@
 												</label>
 												<!--end::Option-->
 												<!--begin::Option-->
-												<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-													<input class="form-check-input" type="radio" name="payment_type" value="visa" />
-													<span class="form-check-label text-gray-600">Visa</span>
-												</label>
-												<!--end::Option-->
-												<!--begin::Option-->
-												<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-													<input class="form-check-input" type="radio" name="payment_type" value="mastercard" />
-													<span class="form-check-label text-gray-600">Mastercard</span>
-												</label>
-												<!--end::Option-->
-												<!--begin::Option-->
 												<label class="form-check form-check-sm form-check-custom form-check-solid">
 													<input class="form-check-input" type="radio" name="payment_type" value="american_express" />
-													<span class="form-check-label text-gray-600">American Express</span>
+													<span class="form-check-label text-gray-600">Poli Umum</span>
 												</label>
 												<!--end::Option-->
 											</div>
@@ -128,13 +123,13 @@
 								<!--end::Menu 1-->
 								<!--end::Filter-->
 								<!--begin::Export-->
-								<button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_dokters_export_modal">
+								<button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_perawats_export_modal">
 								<i class="ki-duotone ki-exit-up fs-2">
 									<span class="path1"></span>
 									<span class="path2"></span>
 								</i>Export</button>
 								<!--end::Export-->
-								<!--begin::Add dokter-->
+								<!--begin::Add dokter-->	
 								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_perawat">Tambah Data</button>
 								<!--end::Add dokter-->
 							</div>
@@ -173,7 +168,7 @@
 							<tr>
 								<td>
 									<div class="form-check form-check-sm form-check-custom form-check-solid">
-										<input class="form-check-input checkbox-perawat" data-id="{{$perawat->id}}" type="checkbox" value="1" />
+										<input class="form-check-input checkbox-perawat" name='ids' data-id="{{$perawat->id}}" type="checkbox" value="1" />
 									</div>
 								</td>
 								<td>

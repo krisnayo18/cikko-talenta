@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\PerawatController;
+use App\Models\Perawat;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('dokters', DokterController::class);
     Route::resource('perawats', PerawatController::class);
+    // Route::delete('/perawats/deleteAll/{perawat}', [PerawatController::class, 'deleteAll'])->name('perawat.deleteAll');
 
     
     // Route::get('/perawat', App\Livewire\Perawat::class)->name('perawat.index');
